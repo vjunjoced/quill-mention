@@ -17,6 +17,7 @@ class Mention {
 
     this.options = {
       source: null,
+      selectItem: null,
       renderItem(item, searchTerm) {
         return `${item.value}`;
       },
@@ -161,6 +162,9 @@ class Mention {
 
   selectItem() {
     const data = this.getItemData();
+    if (this.options.selectItem !== null) {
+      this.options.selectItem(data);
+    }
     this.quill
       .deleteText(this.mentionCharPos, this.cursorPos - this.mentionCharPos, Quill.sources.API);
     this.quill.insertEmbed(this.mentionCharPos, 'mention', data, Quill.sources.API);
